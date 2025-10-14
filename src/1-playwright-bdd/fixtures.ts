@@ -1,10 +1,10 @@
 import { test as base, createBdd } from "playwright-bdd";
 import { AgifyUtils } from "./utils/agify-utils.ts";
 
-interface Ctx {
+export interface Ctx {
   name: string;
   names: string[];
-  body: Record<string, string>;
+  body: Record<string, string> | string;
   status: number;
   countryId: string;
 }

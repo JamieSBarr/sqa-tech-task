@@ -1,0 +1,9 @@
+{
+  "default": {
+    "parallel": 2,
+    "format": ["html:cucumber-report/index.html", "@cucumber/pretty-formatter"],
+    "paths": ["src/features/*.feature"],
+    "import": ["src/2-cucumber/steps/*.ts"],
+    "loader": ["ts-node/esm"]
+  }
+}

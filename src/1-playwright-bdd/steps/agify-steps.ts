@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { Given, Then } from "../fixtures.ts";
 import Chance from "chance";
-import type { Method } from "../types.ts";
+import type { Method } from "../../types.ts";
 
 const chance = new Chance();
 
@@ -129,6 +129,7 @@ Given("I call the Agify API with an empty name parameter", async ({ agifyUtils, 
 
   ctx.body = body;
   ctx.status = status;
+  ctx.name = "";
 });
 
 Given("I call the Agify API without a name parameter", async ({ agifyUtils, ctx }) => {
@@ -148,14 +149,27 @@ Given("I call the Agify API with an unknown parameter", async ({ agifyUtils, ctx
 });
 
 Then(`I expect the error message to contain {string}`, async ({ ctx }, errorMessage: string) => {
-  expect(ctx.body).toMatchObject({
-    error: errorMessage,
-  });
+  if (typeof ctx.body === "string") {
+    expect(ctx.body).toEqual(errorMessage);
+  } else {
+    expect(ctx.body).toMatchObject({
+      error: errorMessage,
+    });
+  }
 });
 
-Given("I call the Agify API with the {string} method", async ({ agifyUtils, ctx }, method: Method) => {
+Given("I call the Agify API with the {word} method", async ({ agifyUtils, ctx }, method: Method) => {
   const name = chance.first();
-  const { body, status } = await agifyUtils.makeRequest({ name }, method);
+  const { body, status } = await agifyUtils.makeRequest({ name }, method, false);
+
+  ctx.body = body;
+  ctx.status = status;
+});
+
+Given("I call the Agify API with an invalid API key", async ({ agifyUtils, ctx }) => {
+  const name = chance.first();
+  const apiKey = chance.string({ symbols: false });
+  const { status, body } = await agifyUtils.makeRequest({ name, apikey: apiKey });
 
   ctx.body = body;
   ctx.status = status;
