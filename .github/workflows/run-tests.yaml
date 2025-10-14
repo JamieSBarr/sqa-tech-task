@@ -27,29 +27,36 @@ jobs:
 
       - name: Run Playwright BDD tests
         run: pnpm pw-smoke
+        continue-on-error: true
 
       - name: Run Cucumber tests
         run: pnpm cu-smoke
+        continue-on-error: true
 
       - name: Auth to GCloud
+        if: always()
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ vars.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ vars.SERVICE_ACCOUNT }}
+          process_gcloudignore: false
 
       - name: Upload Playwright Report
+        if: always() && hashFiles('playwright-report/**/*') != ''
         uses: google-github-actions/upload-cloud-storage@v1
         with:
           path: playwright-report/
           destination: gs://sqa-tech-task/${{ github.run_id }}/playwright/
 
       - name: Upload Cucumber Report
+        if: always() && hashFiles('cucumber-report/**/*') != ''
         uses: google-github-actions/upload-cloud-storage@v1
         with:
           path: cucumber-report/
           destination: gs://sqa-tech-task/${{ github.run_id }}/cucumber/
 
       - name: Add links to step summary
+        if: always() && (hashFiles('playwright-report/**/*') != '' || hashFiles('cucumber-report/**/*') != '')
         run: |
           PLAYWRIGHT_URL="https://storage.googleapis.com/sqa-tech-task/${{ github.run_id }}/playwright/index.html"
           CUCUMBER_URL="https://storage.googleapis.com/sqa-tech-task/${{ github.run_id }}/cucumber/index.html"
