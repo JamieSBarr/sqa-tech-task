@@ -14,7 +14,7 @@ export default defineConfig({
   retries: 0,
   workers: process.env.CI ? 1 : undefined,
   use: {
-    trace: "retain-on-failure",
+    trace: "on",
     baseURL: process.env.BASE_URL,
   },
   outputDir: "./output",
