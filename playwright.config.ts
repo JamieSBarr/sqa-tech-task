@@ -1,5 +1,6 @@
 import { defineConfig } from "@playwright/test";
 import { defineBddConfig } from "playwright-bdd";
+import { config } from "./src/config";
 
 const testDir = defineBddConfig({
   features: "src/features/*.feature",
@@ -15,7 +16,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   use: {
     trace: "on",
-    baseURL: process.env.BASE_URL,
+    baseURL: config.BASE_URL,
   },
   outputDir: "./output",
 });
