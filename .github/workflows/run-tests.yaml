@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -26,11 +25,11 @@ jobs:
         run: pnpm install
 
       - name: Run Playwright BDD tests
-        run: pnpm pw-smoke
+        run: pnpm pw-start
         continue-on-error: true
 
       - name: Run Cucumber tests
-        run: pnpm cu-smoke
+        run: pnpm cu-start
         continue-on-error: true
 
       - name: Auth to GCloud
