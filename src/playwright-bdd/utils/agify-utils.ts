@@ -8,10 +8,10 @@ export class AgifyUtils {
     this.request = request;
   }
 
-  async makeRequest(params: SearchParams = {}, method: Method = "get") {
+  async makeRequest(params: SearchParams = {}, method: Method = "get", expectJson = true) {
     const response = await this.request[method]("https://api.agify.io", { params });
 
-    const body = await response.json();
+    const body = expectJson ? await response.json() : await response.text();
     const status = response.status();
 
     return {

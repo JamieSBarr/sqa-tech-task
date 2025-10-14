@@ -51,9 +51,10 @@ Feature: Agify API
     Then I expect a 422 status code
     And I expect the error message to contain "Invalid 'name' parameter"
 
-  Scenario Outline: Calling with unsupported HTTP methods
+  Scenario Outline: Calling with unsupported HTTP methods - <method>
     Given I call the Agify API with the <method> method
     Then I expect a 404 status code
+    And I expect the error message to contain "Not Found"
 
     Examples:
       | method |
@@ -61,3 +62,8 @@ Feature: Agify API
       | put    |
       | patch  |
       | delete |
+
+  Scenario: Invalid API key
+    Given I call the Agify API with an invalid API key
+    Then I expect a 401 status code
+    And I expect the error message to contain "Invalid API key"

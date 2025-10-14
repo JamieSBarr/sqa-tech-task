@@ -1,13 +1,6 @@
 import { test as base, createBdd } from "playwright-bdd";
 import { AgifyUtils } from "./utils/agify-utils.ts";
-
-interface Ctx {
-  name: string;
-  names: string[];
-  body: Record<string, string>;
-  status: number;
-  countryId: string;
-}
+import type { Ctx } from "./types.ts";
 
 interface TestFixtures {
   ctx: Ctx;
