@@ -1,5 +1,5 @@
 import type { APIRequestContext } from "@playwright/test";
-import type { Method, SearchParams } from "../types.ts";
+import type { Method, SearchParams } from "../../types.ts";
 
 export class AgifyUtils {
   private request: APIRequestContext;

@@ -4,19 +4,29 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "pnpm bddgen && pnpm playwright test",
-    "open": "pnpm bddgen && pnpm playwright test --ui"
+    "pw-start": "pnpm bddgen && pnpm playwright test",
+    "pw-open": "pnpm bddgen && pnpm playwright test --ui",
+    "pw-smoke": "pnpm bddgen --tags '@smoke' && pnpm playwright test",
+    "cu-start": "pnpm cucumber-js",
+    "cu-smoke": "pnpm cucumber-js --tags '@smoke'",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.11.1",
   "devDependencies": {
+    "@cucumber/cucumber": "^12.2.0",
+    "@cucumber/pretty-formatter": "^2.3.0",
     "@playwright/test": "^1.56.0",
+    "@types/chai": "^5.2.2",
     "@types/chance": "^1.1.7",
     "@types/node": "^24.7.2",
+    "axios": "^1.12.2",
+    "chai": "^6.2.0",
     "chance": "^1.1.13",
     "playwright-bdd": "^8.4.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
 }

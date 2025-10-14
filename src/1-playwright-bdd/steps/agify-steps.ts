@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { Given, Then } from "../fixtures.ts";
 import Chance from "chance";
-import type { Method } from "../types.ts";
+import type { Method } from "../../types.ts";
 
 const chance = new Chance();
 

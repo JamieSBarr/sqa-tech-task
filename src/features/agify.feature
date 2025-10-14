@@ -63,6 +63,7 @@ Feature: Agify API
       | patch  |
       | delete |
 
+  @smoke
   Scenario: Invalid API key
     Given I call the Agify API with an invalid API key
     Then I expect a 401 status code
