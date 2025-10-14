@@ -8,3 +8,5 @@ playwright-report
 cucumber-report
 output
 .features-gen
+
+.DS_Store
