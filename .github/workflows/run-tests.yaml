@@ -41,25 +41,35 @@ jobs:
           service_account: ${{ vars.SERVICE_ACCOUNT }}
 
       - name: Upload Playwright Report
+        id: upload-playwright-report
         if: always() && hashFiles('playwright-report/**/*') != ''
         uses: google-github-actions/upload-cloud-storage@v1
         with:
           path: playwright-report/
           destination: sqa-tech-task-test-reports/${{ github.run_id }}/playwright/
           process_gcloudignore: false
+          parent: false
+          predefinedAcl: publicRead
 
       - name: Upload Cucumber Report
+        id: upload-cucumber-report
         if: always() && hashFiles('cucumber-report/**/*') != ''
         uses: google-github-actions/upload-cloud-storage@v1
         with:
           path: cucumber-report/
           destination: sqa-tech-task-test-reports/${{ github.run_id }}/cucumber/
           process_gcloudignore: false
+          parent: false
+          predefinedAcl: publicRead
 
-      - name: Add links to step summary
-        if: always() && (hashFiles('playwright-report/**/*') != '' || hashFiles('cucumber-report/**/*') != '')
+      - name: Add Playwright report link to step summary
+        if: steps.upload-playwright-report.outcome == 'success'
         run: |
           PLAYWRIGHT_URL="https://storage.googleapis.com/sqa-tech-task-test-reports/${{ github.run_id }}/playwright/index.html"
-          CUCUMBER_URL="https://storage.googleapis.com/sqa-tech-task-test-reports/${{ github.run_id }}/cucumber/index.html"
           echo "🎭 [View Playwright Report](${PLAYWRIGHT_URL})" >> $GITHUB_STEP_SUMMARY
+
+      - name: Add Cucumber report link to step summary
+        if: steps.upload-cucumber-report.outcome == 'success'
+        run: |
+          CUCUMBER_URL="https://storage.googleapis.com/sqa-tech-task-test-reports/${{ github.run_id }}/cucumber/index.html"
           echo "🥒 [View Cucumber Report](${CUCUMBER_URL})" >> $GITHUB_STEP_SUMMARY
