@@ -39,21 +39,22 @@ jobs:
         with:
           workload_identity_provider: ${{ vars.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ vars.SERVICE_ACCOUNT }}
-          process_gcloudignore: false
 
       - name: Upload Playwright Report
         if: always() && hashFiles('playwright-report/**/*') != ''
         uses: google-github-actions/upload-cloud-storage@v1
         with:
           path: playwright-report/
-          destination: gs://sqa-tech-task/${{ github.run_id }}/playwright/
+          destination: sqa-tech-task/${{ github.run_id }}/playwright/
+          process_gcloudignore: false
 
       - name: Upload Cucumber Report
         if: always() && hashFiles('cucumber-report/**/*') != ''
         uses: google-github-actions/upload-cloud-storage@v1
         with:
           path: cucumber-report/
-          destination: gs://sqa-tech-task/${{ github.run_id }}/cucumber/
+          destination: sqa-tech-task/${{ github.run_id }}/cucumber/
+          process_gcloudignore: false
 
       - name: Add links to step summary
         if: always() && (hashFiles('playwright-report/**/*') != '' || hashFiles('cucumber-report/**/*') != '')
