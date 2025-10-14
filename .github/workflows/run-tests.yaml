@@ -13,7 +13,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Install tool versions
+        uses: jdx/mise-action@v2
+
+      - name: Install Node dependencies
         run: pnpm install
 
       - name: Run Playwright BDD tests
