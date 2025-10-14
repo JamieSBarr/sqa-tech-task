@@ -45,7 +45,7 @@ jobs:
         uses: google-github-actions/upload-cloud-storage@v1
         with:
           path: playwright-report/
-          destination: sqa-tech-task/${{ github.run_id }}/playwright/
+          destination: sqa-tech-task-test-reports/${{ github.run_id }}/playwright/
           process_gcloudignore: false
 
       - name: Upload Cucumber Report
@@ -53,13 +53,13 @@ jobs:
         uses: google-github-actions/upload-cloud-storage@v1
         with:
           path: cucumber-report/
-          destination: sqa-tech-task/${{ github.run_id }}/cucumber/
+          destination: sqa-tech-task-test-reports/${{ github.run_id }}/cucumber/
           process_gcloudignore: false
 
       - name: Add links to step summary
         if: always() && (hashFiles('playwright-report/**/*') != '' || hashFiles('cucumber-report/**/*') != '')
         run: |
-          PLAYWRIGHT_URL="https://storage.googleapis.com/sqa-tech-task/${{ github.run_id }}/playwright/index.html"
-          CUCUMBER_URL="https://storage.googleapis.com/sqa-tech-task/${{ github.run_id }}/cucumber/index.html"
+          PLAYWRIGHT_URL="https://storage.googleapis.com/sqa-tech-task-test-reports/${{ github.run_id }}/playwright/index.html"
+          CUCUMBER_URL="https://storage.googleapis.com/sqa-tech-task-test-reports/${{ github.run_id }}/cucumber/index.html"
           echo "🎭 [View Playwright Report](${PLAYWRIGHT_URL})" >> $GITHUB_STEP_SUMMARY
           echo "🥒 [View Cucumber Report](${CUCUMBER_URL})" >> $GITHUB_STEP_SUMMARY
