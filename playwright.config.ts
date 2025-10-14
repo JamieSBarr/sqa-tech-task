@@ -9,7 +9,7 @@ const testDir = defineBddConfig({
 
 export default defineConfig({
   testDir,
-  reporter: "html",
+  reporter: [["html"], ["list", { printSteps: true }]],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
