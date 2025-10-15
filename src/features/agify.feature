@@ -1,10 +1,12 @@
 Feature: Agify API
 
+  @smoke
   Scenario: Happy path - calling with a single name
     Given I call the Agify API with a single name
     Then I expect a 200 status code
     And I expect the response body to contain the name, a count and an age
 
+  @smoke
   Scenario Outline: Happy path - calling with multiple names
     Given I call the Agify API with <number_of_names> names
     Then I expect a 200 status code
